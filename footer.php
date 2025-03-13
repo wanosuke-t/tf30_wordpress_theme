@@ -32,6 +32,8 @@
 		</div><!-- /inner -->
 	</footer><!-- /footer -->
 
+	<?php get_template_part('/template-parts/footer-sns'); ?>
+
 	<div class="floating">
 		<a href="#"><i class="fas fa-chevron-up"></i></a>
 	</div>

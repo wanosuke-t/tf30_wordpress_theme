@@ -8,10 +8,12 @@
     <!-- primary -->
     <main id="primary">
 
-      <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する ?>
+      <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する 
+      ?>
         <!-- breadcrumb -->
         <div class="breadcrumb">
-          <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 ?>
+          <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 
+          ?>
         </div><!-- /breadcrumb -->
       <?php endif; ?>
 
@@ -46,7 +48,7 @@
                   <?php
                   $category = get_the_category();
                   if ($category[0]): ?>
-                    <div class="entry-item-tag"><?php echo $category[0]->cat_name; ?></div><!-- /entry-item-tag -->
+                    <div class="entry-item-tag"><?php my_the_post_category(); ?></div><!-- /entry-item-tag -->
                   <?php endif; ?>
                   <time class="entry-item-published" datetime="<?php the_time("c"); ?>"><?php the_time("Y/n/j"); ?></time><!-- /entry-item-published -->
                 </div><!-- /entry-item-meta -->
@@ -62,22 +64,7 @@
 
       </div><!-- /entries -->
 
-      <?php if (paginate_links()): ?>
-        <!-- pagination -->
-        <div class="pagination">
-          <?php
-          echo paginate_links(
-            array(
-              'end_size' => 1,
-              'mid_size' => 1,
-              'prev_next' => true,
-              'prev_text' => '<i class="fas fa-angle-left"></i>',
-              'next_text' => '<i class="fas fa-angle-right"></i>',
-            )
-          );
-          ?>
-        </div><!-- /pagination -->
-      <?php endif; ?>
+      <?php get_template_part('/template-parts/pagination'); ?>
 
     </main><!-- /primary -->
 

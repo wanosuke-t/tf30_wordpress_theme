@@ -14,6 +14,9 @@ function my_script_init()
   wp_enqueue_style('font-awesome', "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css", array(), "5.8.2", "all");
   wp_enqueue_style("my-style", get_template_directory_uri() . "/css/style.css", array(), filemtime(get_theme_file_path('css/style.css')), "all");
   wp_enqueue_script("my-script", get_template_directory_uri() . "/js/script.js", array("jquery"), filemtime(get_theme_file_path('js/script.js')), true);
+  if (is_single()) {
+    wp_enqueue_script("sns-script", get_template_directory_uri() . "/js/sns.js", array("jquery"), filemtime(get_theme_file_path('js/script.js')), true);
+  }
 }
 add_action('wp_enqueue_scripts', 'my_script_init');
 
@@ -32,7 +35,8 @@ add_action('init', 'my_menu_init');
 /**
  * アーカイブタイトル書き換え
  */
-function my_archive_title($title) {
+function my_archive_title($title)
+{
 
   if (is_category()) { // カテゴリーアーカイブの場合
     $title = single_cat_title('', false);
@@ -59,3 +63,34 @@ function my_archive_title($title) {
   return $title;
 };
 add_filter('get_the_archive_title', 'my_archive_title');
+
+/* 
+*  カテゴリー名を取得する関数
+*/
+function my_the_post_category($anchor = false)
+{
+  $category = get_the_category();
+  if ($category[0]) {
+    if ($anchor) {
+      echo '<a href="' . get_category_link($category[0]->term_id) . '">' . $category[0]->cat_name . '</a>';
+    } else {
+      echo $category[0]->cat_name;
+    }
+  }
+}
+
+/* 
+*  タグ名を取得する関数
+*/
+function my_the_tags()
+{
+  $post_tags = get_the_tags(); //このポストが持つすべてのタグを取得 
+  if ($post_tags) { //タグが存在するなら表示させる処理に入る 
+    foreach ($post_tags as $tag) { //持っているタグの数だけループさせる 
+      if($tag->name === 'pickup') { //pickupタグがある場合は処理をスキップ
+        continue;
+      }
+      echo '<div class="entry-tag-item"><a href="' . get_tag_link($tag->term_id) . '">' . $tag->name  . '</a></div>';
+    }
+  }
+}
