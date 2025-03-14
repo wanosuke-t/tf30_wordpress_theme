@@ -29,6 +29,7 @@
         <?php if (have_posts()): ?>
           <?php while (have_posts()): ?>
             <?php the_post(); ?>
+            
             <!-- entry-item -->
             <a href="<?php the_permalink(); ?>" class="entry-item">
               <!-- entry-item-img -->

@@ -33,7 +33,8 @@ function my_menu_init()
   );
 };
 add_action('init', 'my_menu_init');
-function my_widget_init () {
+function my_widget_init()
+{
   register_sidebar(
     array(
       'name' => 'サイドバー',
@@ -110,3 +111,26 @@ function my_the_tags()
     }
   }
 }
+
+/**
+ * 検索クエリをカスタマイズして、「投稿 (post) のみ」を検索対象にする
+ *
+ * @param string   $search   検索用の WHERE 句（SQLの一部）
+ * @param WP_Query $wp_query 現在の検索クエリ情報を持つ WP_Query オブジェクト
+ * @return string  変更後の検索SQLの WHERE 句
+ */
+function my_posts_search($search, $wp_query)
+{
+  // 検索クエリ（is_search()）かつ、メインクエリ（is_main_query()）で、管理画面ではない場合に実行
+  if ($wp_query->is_search() && $wp_query->is_main_query() && !is_admin()) {
+    // 現在の検索条件 ($search) に「投稿（post）のみを対象にする」条件を追加
+    $search .= " AND post_type = 'post' ";
+  }
+  return $search; // 変更後の検索クエリを返す
+}
+// WordPress の検索 SQL をカスタマイズするフィルターを登録
+// - 'posts_search' → 検索の WHERE 句を変更するフック
+// - 'my_posts_search' → 呼び出す関数
+// - 10 → 優先度（デフォルト値）
+// - 2 → 渡される引数の数（$search, $wp_query の 2 つ）
+add_filter('posts_search', 'my_posts_search', 10, 2);
