@@ -1546,6 +1546,17 @@ select:focus {
 	width: 20px;
 }
 
+.m_ranking .wpost-item:nth-of-type(1)::after {
+	background: #E1AA26;
+}
+.m_ranking .wpost-item:nth-of-type(2)::after {
+	background: #C9CACA;
+}
+.m_ranking .wpost-item:nth-of-type(3)::after {
+	background: #B86D45;
+}
+
+
 .wpost-item-img {
 	width: 120px;
 }

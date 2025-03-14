@@ -6,8 +6,9 @@ function my_setup()
   add_theme_support("automatic-feed-links");
   add_theme_support("title-tag");
   add_theme_support('html5', array('comment-list', 'comment-form', 'search-form', 'gallery', 'caption', 'style', 'script'));
-}
+};
 add_action('after_setup_theme', 'my_setup');
+
 
 function my_script_init()
 {
@@ -16,9 +17,10 @@ function my_script_init()
   wp_enqueue_script("my-script", get_template_directory_uri() . "/js/script.js", array("jquery"), filemtime(get_theme_file_path('js/script.js')), true);
   if (is_single()) {
     wp_enqueue_script("sns-script", get_template_directory_uri() . "/js/sns.js", array("jquery"), filemtime(get_theme_file_path('js/script.js')), true);
-  }
-}
+  };
+};
 add_action('wp_enqueue_scripts', 'my_script_init');
+
 
 function my_menu_init()
 {
@@ -29,8 +31,22 @@ function my_menu_init()
       'footer' => 'フッターメニュー',
     )
   );
-}
+};
 add_action('init', 'my_menu_init');
+function my_widget_init () {
+  register_sidebar(
+    array(
+      'name' => 'サイドバー',
+      'id' => 'sidebar',
+      'before_widget' => '<div id="%1$s" class="widget %2$s">',
+      'after_widget' => '</div>',
+      'before_title' => '<div class="widget-title">',
+      'after_title' => '</div>',
+    )
+  );
+}
+add_action('widgets_init', 'my_widget_init');
+
 
 /**
  * アーカイブタイトル書き換え
@@ -87,7 +103,7 @@ function my_the_tags()
   $post_tags = get_the_tags(); //このポストが持つすべてのタグを取得 
   if ($post_tags) { //タグが存在するなら表示させる処理に入る 
     foreach ($post_tags as $tag) { //持っているタグの数だけループさせる 
-      if($tag->name === 'pickup') { //pickupタグがある場合は処理をスキップ
+      if ($tag->name === 'pickup') { //pickupタグがある場合は処理をスキップ
         continue;
       }
       echo '<div class="entry-tag-item"><a href="' . get_tag_link($tag->term_id) . '">' . $tag->name  . '</a></div>';
