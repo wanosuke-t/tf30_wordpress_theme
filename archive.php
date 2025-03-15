@@ -8,10 +8,12 @@
     <!-- primary -->
     <main id="primary">
 
-      <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する ?>
+      <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する 
+      ?>
         <!-- breadcrumb -->
         <div class="breadcrumb">
-          <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 ?>
+          <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 
+          ?>
         </div><!-- /breadcrumb -->
       <?php endif; ?>
 
@@ -29,7 +31,7 @@
         <?php if (have_posts()): ?>
           <?php while (have_posts()): ?>
             <?php the_post(); ?>
-            
+
             <!-- entry-item -->
             <a href="<?php the_permalink(); ?>" class="entry-item">
               <!-- entry-item-img -->

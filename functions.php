@@ -134,3 +134,19 @@ function my_posts_search($search, $wp_query)
 // - 10 → 優先度（デフォルト値）
 // - 2 → 渡される引数の数（$search, $wp_query の 2 つ）
 add_filter('posts_search', 'my_posts_search', 10, 2);
+
+
+// ショートコード（ボタン）
+function my_contact_btn_shortcode($atts, $content = '')
+{
+  return '<div class="entry-btn"><a class="btn" href="' . $atts['link'] . '">' . $content . '</a></div>';
+}
+add_shortcode('btn', 'my_contact_btn_shortcode');
+
+
+// ショートコード（検索フォーム）
+function my_search_form_shortcode($atts, $content = '')
+{
+  return get_search_form(false); //文字列を返す
+}
+add_shortcode('search-form', 'my_search_form_shortcode');

@@ -1,0 +1,1 @@
+<?php echo 'taxonomy-genre'; ?>
