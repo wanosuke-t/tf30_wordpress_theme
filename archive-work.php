@@ -11,15 +11,7 @@
 
 <div class="work-breadcrumb">
   <div class="inner">
-    <!-- breadcrumb -->
-    <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する 
-    ?>
-      <!-- breadcrumb -->
-      <div class="breadcrumb">
-        <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 
-        ?>
-      </div><!-- /breadcrumb -->
-    <?php endif; ?>
+    <?php get_template_part('/template-parts/breadcrumb'); ?>
   </div><!-- /inner -->
 </div><!-- /work-breadcrumb -->
 
@@ -34,7 +26,7 @@
       <div class="genre-nav">
         <div class="genre-nav-link"><a class="is-active" href="<?php echo get_post_type_archive_link('work'); ?>">すべて</a></div>
         <?php
-        // 'genre' というカスタムタクソノミーのターム（カテゴリのようなもの）を取得する
+        // 'genre' というカスタムタクソノミーのタームを取得する
         $genre_terms = get_terms('genre', array(
           'hide_empty' => false // 投稿が紐づいていないタームも取得する
         ));
@@ -50,26 +42,27 @@
       <!-- entries -->
       <div class="entries entries-work">
 
-        <?php $args = array(
-          'posts_per_page' => 9, // 取得する投稿数を指定
-        );
-        $custom_query = new WP_Query($args);
-        ?>
-        <?php if ($custom_query->have_posts()): ?>
-          <?php while ($custom_query->have_posts()): ?>
-            <?php $custom_query->the_post(); ?>
+        <?php if (have_posts()): ?>
+          <?php while (have_posts()): ?>
+            <?php the_post(); ?>
 
-
-            <a href="" class="entry-item entry-item-horizontal">
+            <a href="<?php the_permalink(); ?>" class="entry-item entry-item-horizontal">
               <div class="entry-item-img">
-                <img src="img/entry1.png" alt="">
+                <?php if (has_post_thumbnail()): ?>
+                  <?php the_post_thumbnail(); ?>
+                <?php else: ?>
+                  <img src="<?php echo get_template_directory_uri(); ?>/img/noimg.png" alt="">
+                <?php endif; ?>
               </div>
               <div class="entry-item-body">
                 <div class="entry-item-meta">
-                  <div class="entry-item-tag">Webサイト制作</div>
+                  <?php $the_terms = get_the_terms(get_the_ID(), 'genre');
+                  if (!empty($the_terms)): ?>
+                    <div class="entry-item-tag"><?php echo $the_terms[0]->name; ?></div>
+                  <?php endif; ?>
                 </div>
-                <div class="entry-item-title">△△ブランドのECサイト構築</div>
-                <div class="entry-item-excerpt">抜粋テキストが入ります。抜粋テキストが入ります。抜粋テキストが入ります。抜粋テキストが入ります。</div>
+                <div class="entry-item-title"><?php the_title(); ?></div>
+                <div class="entry-item-excerpt"><?php echo mb_substr(post_custom('overview'), 0, 40); ?></div>
               </div><!-- /entry-item-body -->
             </a><!-- /entry-item -->
 
@@ -78,22 +71,7 @@
 
       </div><!-- /entries -->
 
-      <?php if (paginate_links()): ?>
-        <!-- pagination -->
-        <div class="pagination">
-          <?php
-          echo paginate_links(
-            array(
-              'end_size' => 1,
-              'mid_size' => 1,
-              'prev_next' => true,
-              'prev_text' => '<i class="fas fa-angle-left"></i>',
-              'next_text' => '<i class="fas fa-angle-right"></i>',
-            )
-          );
-          ?>
-        </div><!-- /pagination -->
-      <?php endif; ?>
+      <?php get_template_part('/template-parts/pagination'); ?>
 
     </main><!-- /primary -->
 

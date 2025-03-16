@@ -7,15 +7,7 @@
     <!-- primary -->
     <main id="primary">
 
-      <!-- breadcrumb -->
-      <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する 
-      ?>
-        <!-- breadcrumb -->
-        <div class="breadcrumb">
-          <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 
-          ?>
-        </div><!-- /breadcrumb -->
-      <?php endif; ?><!-- /breadcrumb -->
+      <?php get_template_part('/template-parts/breadcrumb'); ?>
 
       <?php if (have_posts()): ?>
         <?php while (have_posts()): ?>
@@ -40,7 +32,7 @@
               <!-- entry-img -->
               <div class="entry-img">
                 <?php if (has_post_thumbnail()): ?>
-                  <?php the_post_thumbnail(); ?>
+                  <?php the_post_thumbnail('full'); ?>
                 <?php else: ?>
                   <img src="<?php echo get_template_directory_uri(); ?>/img/noimg.png" alt="">
                 <?php endif; ?>

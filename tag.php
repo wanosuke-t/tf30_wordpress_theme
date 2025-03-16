@@ -8,14 +8,7 @@
     <!-- primary -->
     <main id="primary">
 
-      <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する 
-      ?>
-        <!-- breadcrumb -->
-        <div class="breadcrumb">
-          <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 
-          ?>
-        </div><!-- /breadcrumb -->
-      <?php endif; ?>
+      <?php get_template_part('/template-parts/breadcrumb'); ?>
 
       <div class="archive-head m_description">
         <div class="archive-lead">TAG</div>

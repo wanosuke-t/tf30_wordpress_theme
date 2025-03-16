@@ -8,14 +8,7 @@
     <!-- primary -->
     <main id="primary">
 
-      <?php if (function_exists('bcn_display')): //BreadcrumbNavXTプラグインが入っているときだけ表示する 
-      ?>
-        <!-- breadcrumb -->
-        <div class="breadcrumb">
-          <?php bcn_display(); // BreadcrumbNavXTのパンくずリストを表示するための記述 
-          ?>
-        </div><!-- /breadcrumb -->
-      <?php endif; ?>
+      <?php get_template_part('/template-parts/breadcrumb'); ?>
 
       <div class="archive-head m_description">
         <div class="archive-lead">ARCHIVE</div>
@@ -65,22 +58,7 @@
 
       </div><!-- /entries -->
 
-      <?php if (paginate_links()): ?>
-        <!-- pagination -->
-        <div class="pagination">
-          <?php
-          echo paginate_links(
-            array(
-              'end_size' => 1,
-              'mid_size' => 1,
-              'prev_next' => true,
-              'prev_text' => '<i class="fas fa-angle-left"></i>',
-              'next_text' => '<i class="fas fa-angle-right"></i>',
-            )
-          );
-          ?>
-        </div><!-- /pagination -->
-      <?php endif; ?>
+      <?php get_template_part('/template-parts/pagination'); ?>
 
     </main><!-- /primary -->
 
